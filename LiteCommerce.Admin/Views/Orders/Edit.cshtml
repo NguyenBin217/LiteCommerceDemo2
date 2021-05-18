@@ -1,0 +1,77 @@
+﻿@model LiteCommerce.DomainModels.Order
+@{
+    ViewBag.Title = "Cập nhật thông tin đơn hàng";
+}
+<!--Bảng hiển thị thông tin các đơn hàng-->
+<p>Tổng số đơn hàng</p>
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Tên khách hàng</th>
+            <th>Ngày đặt hàng</th>
+            <th>Tổng tiền</th>
+            <th>
+                <a class="btn btn-info" data-toggle="modal" data-target="#ProductAttribute"><i class="fa fa-info-circle"></i></a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<p>Thêm mặt hàng</p>
+<!--Hiển thị thông tin mặt hàng để sữa đổi-->
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Tên mặt hàng:</th>
+            <th>Đơn vị tính</th>
+            <th>Giá hàng</th>
+            <th>
+                <a class="btn btn-success"><i class="fa fa-plus"></i></a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!--Modal View detail-->
+<div class="modal fade" id="ProductAttribute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Product Attributes</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên mặt hàng</th>
+                            <th>Đơn vị tính</th>
+                            <th>Giá hàng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chais</td>
+                            <td>10 boxes x 20 bags</td>
+                            <td>18,000</td>
+                        </tr>
+                        <tr>
+                            <td>Aniseed Syrup</td>
+                            <td>24 - 12 oz bottles</td>
+                            <td>21,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

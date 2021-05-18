@@ -1,0 +1,66 @@
+﻿@model LiteCommerce.DomainModels.Product
+@{
+    ViewBag.Title = "Danh mục hàng hóa";
+}
+
+<!-- Form để tìm kiếm -->
+<div class="container-fluid">
+    <form id="formSearchInput">
+        <div class="row">
+            <div class="col-md-6" name="category">
+                @Html.Label("Category Name")
+                @Html.DropDownList("category", SelectListHelper.ListCategory(),"Chọn loại hàng",new { @class = "form-control" })
+            </div>
+
+
+            <div class="col-md-6" name="supplier">
+                @Html.Label("Supplier Name")
+                @Html.DropDownList("supplier", SelectListHelper.ListSupplier(),"Chọn nhà cung cấp",new { @class = "form-control" })
+            </div>
+
+        </div><div class="row" style="margin-top:5px">
+                <div class="col-md-12 ">
+                    <div class="input-group">
+                        <input name="searchValue" type="text" class="form-control" placeholder="Nhập tên cần tìm..." value="">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-search"></i> Tìm kiếm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</form>
+</div>
+
+<!-- Hiển thị kết quả tìm kiếm -->
+<div id="listProducts" class="container-fluid"></div>
+
+
+
+@section scripts {
+    <script>
+        function getProducts(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Products/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listProducts").empty();
+                    $("#listProducts").html(data);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            getProducts(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getProducts(1);
+            });
+        });
+    </script>
+}

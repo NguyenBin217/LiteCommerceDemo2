@@ -1,0 +1,55 @@
+﻿@model LiteCommerce.DomainModels.Categorie
+<!-- Form để nhập dữ liệu -->
+<div class="container-fluid">
+    <form method="post" action="~/Categories/Save">
+        <div class="form-group">
+            @Html.ValidationSummary()
+        </div>
+        @Html.HiddenFor(m => m.CategoryID)
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Tên loại hàng hóa:</label>
+                    @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control", @autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.CategoryName)
+                    <br>
+                    <label>Thuộc loại hàng hóa:</label>
+                    @Html.DropDownListFor(m => m.ParentCategoryId, SelectListHelper.ParentCategories(), new { @class = "form-control" })
+                    @*<select class="form-control" name="ParentCategory" id="ParentCategory">
+                        @foreach (var item in SelectListHelper.ParentCategoties())
+                        {
+                            if (Model.ParentCategoryId == Convert.(item.Value))
+                            {
+                                <option value="@item.Value" selected>@item.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }*@
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <label>Mô tả thông tin loại hàng hóa:</label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "5" })
+                @*<textarea class="form-control" type="text" name="Description" id="Description" rows="5" ></textarea>*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu dữ liệu
+                </button>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="~/Category/Index" class="btn btn-warning">
+                    <i class="fa fa-window-close"></i> Bỏ qua
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+

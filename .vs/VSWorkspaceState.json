@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\LiteCommerce.Admin",
+    "\\LiteCommerce.Admin\\Controllers",
+    "\\LiteCommerce.BusinessLayers",
+    "\\LiteCommerce.DataLayers",
+    "\\LiteCommerce.DomainModels",
+    "\\LiteCommerce.Shop",
+    "\\LiteCommerce.Shop\\Controllers",
+    "\\LiteCommerce.Shop\\Models",
+    "\\LiteCommerce.Shop\\Views",
+    "\\LiteCommerce.Shop\\Views\\Home"
+  ],
+  "SelectedNode": "\\LiteCommerce.Shop\\Views\\_ViewStart.cshtml",
+  "PreviewInSolutionExplorer": false
+}

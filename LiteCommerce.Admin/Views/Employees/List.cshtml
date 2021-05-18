@@ -1,0 +1,111 @@
+﻿@model LiteCommerce.DomainModels.Employee
+
+
+@{
+    Layout = null;
+}
+
+<div class="text-left">
+    <p>
+        Có tất cả <strong>@ViewBag.RowCount</strong> nhân viên.
+        Bạn đang ở trang <strong>@ViewBag.Page</strong>
+        trên tổng số <strong>@ViewBag.PageCount</strong> trang.
+    </p>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>LastName</th>
+            <th>FirstName</th>
+            <th>BirthDate</th>
+            <th>Photo</th>
+            <th>Notes</th>
+            <th>Email</th>
+          @*  <th class="text-right">
+                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal_Add">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </th>*@
+
+            <th class="text-right">
+                <a href="~/Employees/Add" class="btn btn-xs btn-primary">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.model)
+        {
+        <tr>
+            <td>
+                <a href="~/Employees/Details/@item.EmployeeID">@item.LastName</a>
+            </td>
+            <td>@item.FirstName</td>
+            <td>@item.BirthDate</td>
+            <td>@item.Photo</td>
+            <td>@item.Notes</td>
+            <td>@item.Email</td>
+  @*          <td class="text-right">
+                <button class="btn btn-xs btn-info"
+                        data-toggle="modal" data-target="#@item.EmployeeID">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-xs btn-danger"
+                        data-toggle="modal" data-target=".@item.EmployeeID">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>*@
+             <td>
+            <a href="~/Employees/Edit/@item.EmployeeID" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+            <a href="~/Employees/Delete/@item.EmployeeID" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a>
+             </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="text-center">
+    <ul class="pagination">
+        @for (int page = 1; page <= ViewBag.PageCount; page++)
+        {
+            if (page == ViewBag.Page)
+            {
+                <li class="active"><a href="javascript:;">@page</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="getEmployees(@page)">@page</a></li>
+            }
+        }
+    </ul>
+</div>
+
+@*
+@section scripts {
+    <script>
+        function getEmployees(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Employees/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listEmployees").empty();
+                    $("#listEmployees").html(data);
+                }
+            });
+        }
+        $(document).ready(function () {
+            getEmployees(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getEmployees(1);
+            });
+        });
+    </script>
+}*@

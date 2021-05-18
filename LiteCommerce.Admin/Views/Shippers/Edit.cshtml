@@ -1,0 +1,41 @@
+﻿@model LiteCommerce.DomainModels.Shipper
+
+<!-- Form để nhập dữ liệu -->
+<div class="container-fluid">
+    <form method="post" action="~/Shippers/Save">
+        <div class="form-group">
+            @Html.ValidationSummary()
+        </div>
+        @Html.HiddenFor(m => m.ShipperID)
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tên nhà vận chuyển:</label>
+                    @Html.TextBoxFor(m => m.ShipperName, new { @class = "form-control", @autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.ShipperName)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Điện thoại:</label>
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu dữ liệu
+                </button>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="~/Shippers/Index" class="btn btn-warning">
+                    <i class="fa fa-window-close"></i> Bỏ qua
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+

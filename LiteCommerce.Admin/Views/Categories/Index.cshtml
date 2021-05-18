@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Danh sách danh mục sản phẩm";
+}
+
+
+<!--form tim kiem -->
+<div class="container-fluid">
+    <form  id="formSearchInput">
+        <div class="input-group">
+            <input type="text" class="form-control" name="searchValue" placeholder="Nhập tên cần tìm">
+            <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                    <i class="glyphicon glyphicon-plus"></i> Tìm kiếm
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div id="listCategories" class="container-fluid"></div>
+
+
+@section scripts {
+    <script>
+        function getCategories(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Categories/List",
+                type: "get",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listCategories").empty();
+                    $("#listCategories").html(data);
+                }
+            });
+        }
+        $(document).ready(function () {
+            getCategories(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getCategories(1);
+            });
+        });
+    </script>
+}

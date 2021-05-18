@@ -1,0 +1,46 @@
+﻿@model LiteCommerce.DomainModels.ProductGallery
+
+@{
+    ViewBag.Title = "Cập nhật thông tin thuộc tính";
+}
+<!--Hiển thị thông tin mặt hàng để sữa đổi-->
+<form method="post" action="~/Products/SaveGalleries">
+
+    <input type="hidden" name="GalleryID" value="@Model.GalleryID" />
+    <div style="display: none;" class="form-group">
+        <label>Product ID:</label>
+        <input type="text" class="form-control"
+               name="ProductID" id="ProductID" value="@Model.ProductID" autofocus required>
+    </div>
+    <div class="form-group">
+        <label>Ảnh:</label>
+        <input type="text" class="form-control"
+               name="Photo" id="Photo" value="@Model.Photo" autofocus required>
+    </div>
+
+    <div class="form-group">
+        <label>Mô tả:</label>
+        <input type="text" class="form-control" name="Description" id="Description"value="@Model.Description" required >
+    </div>
+    <div class="form-group">
+        <label>Ẩn Hiện:</label>
+        <input type="checkbox" name="IsHidden" id="IsHidden" value="@Model.IsHidden ? 1 : 0" >
+    </div>
+
+    <div class="form-group">
+        <label>Thứ tự hiển thị:</label>
+        <input type="text" class="form-control" name="DisplayOrder" id="DisplayOrder" value="@Model.DisplayOrder"  />
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu dữ liệu
+                </button>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="~/Product/Index" class="btn btn-warning">
+                    <i class="fa fa-window-close"></i> Bỏ qua
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

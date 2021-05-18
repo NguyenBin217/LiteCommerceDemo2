@@ -1,0 +1,53 @@
+﻿@model LiteCommerce.DomainModels.Product
+@{
+    ViewBag.Title = "Xác nhận xóa sản phẩm";
+}
+
+<form class="form-horizontal" method="post" action="~/Products/Delete/@Model.ProductID">
+    <div class="form-group">
+        <label class="control-label col-sm-2">Tên sản phẩm:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">@Model.ProductName'</p>
+        </div>
+        <label class="control-label col-sm-2">Tên danh mục:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static col-sm-4"  >
+                @Html.DropDownList("CategoryID", SelectListHelper.ListCategory(),new { @class = "form-control" })
+            </p>
+        </div>
+        <label class="control-label col-sm-2">Tên nhà cung cấp:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static col-sm-4">
+                @Html.DropDownList("SuppplierID", SelectListHelper.ListSupplier(),new { @class = "form-control" })
+            </p>
+        </div>
+
+
+        <label class="control-label col-sm-2">Giá:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">@Model.Price</p>
+        </div>
+
+        <label class="control-label col-sm-2">Đơn vị :</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">@Model.Unit</p>
+        </div>
+        <label class="control-label col-sm-2">Photo:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">@Model.Photo</p>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-sm-10">
+            <p class="text-danger" style="font-size:18px">
+                Bạn có chắc chắn muốn xóa nhà vận chuyển này khỏi hệ thống hay không?
+            </p>
+        </div>
+        <div class="col-lg-offset-2 col-sm-10">
+            <button class="btn btn-danger">Đồng ý xóa</button>
+            <a href="~/Products/Index" class="btn btn-warning">Bỏ qua</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách nhà cung cấp hàng hóa";
+}
+<!--form tim kiem -->
+<div class="container-fluid">
+    <form id="formSearchInput">
+        <div class="input-group">
+            <input type="text" class="form-control" name="searchValue" placeholder="Nhập tên cần tìm">
+            <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit" value="true" name="submit">
+                    <i class="glyphicon glyphicon-search"></i> Tim kiem
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="listSuppliers" class="container-fluid"></div>
+
+@section scripts {
+    <script>
+        function getSuppliers(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Suppliers/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listSuppliers").empty();
+                    $("#listSuppliers").html(data);
+                }
+            });
+        }
+        $(document).ready(function () {
+            getSuppliers(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getSuppliers(1);
+            });
+        });
+    </script>
+}

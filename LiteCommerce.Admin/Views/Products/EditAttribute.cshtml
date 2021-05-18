@@ -1,0 +1,40 @@
+﻿@model LiteCommerce.DomainModels.ProductAttribute
+@{
+    ViewBag.Title = "Cập nhật thông tin thuộc tính";
+}
+<!--Hiển thị thông tin mặt hàng để sữa đổi-->
+
+<form method="post" action="~/Products/SaveAttributes">
+<input type="hidden" name="AttributeID" value="@Model.AttributeID" />
+<div style="display: none;" class="form-group">
+    <label>ID Product:</label>
+    <input type="text" class="form-control"
+            name="ProductID" id="ProductID" value="@Model.ProductID" autofocus required>
+</div>
+<div class="form-group">
+    <label>Tên thuộc tính:</label>
+    <input type="text" class="form-control"
+            name="AttributeName" id="AttributeName" value="@Model.AttributeName" autofocus required>
+</div>
+<div class="form-group">
+    <label>Giá trị :</label>
+    <input type="text" class="form-control" name="AttributeValue" id="AttributeValue" value="@Model.AttributeValue" required>
+</div>
+
+<div class="form-group">
+    <label>Thứ tự hiển thị:</label>
+    <input type="text" class="form-control" name="DisplayOrder" id="DisplayOrder" value="@Model.DisplayOrder"  required/>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Lưu dữ liệu
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Product/Index" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</div>
+</form>

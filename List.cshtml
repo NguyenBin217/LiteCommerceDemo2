@@ -1,0 +1,214 @@
+﻿@model LiteCommerce.DomainModels.Product
+
+@{
+    Layout = null;
+}
+
+<div class="text-left">
+    <p>
+        Có tất cả <strong>@ViewBag.RowCount</strong> mặt hàng.
+        Bạn đang ở trang <strong>@ViewBag.Page</strong>
+        trên tổng số <strong>@ViewBag.PageCount</strong> trang.
+    </p>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Tên hàng</th>
+            <th>Đơn vị tính</th>
+            <th>Giá hàng</th>
+            <th>Ảnh minh họa</th>
+            <th class="text-right">
+                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal_Add">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.model)
+        {
+        <tr>
+            <td>
+                <a href="~/Products/Details/@item.ProductID">@item.ProductName</a>
+            </td>
+            <td>@item.Unit</td>
+            <td>@item.Price</td>
+            <td>
+                <img src="@item.Photo" style="height:50px" />
+            </td>
+            <td class="text-right">
+                <button class="btn btn-xs btn-info"
+                        data-toggle="modal" data-target="#@item.ProductID">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-xs btn-danger"
+                        data-toggle="modal" data-target=".@item.ProductID">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>
+           @* <td>
+                <a href="~/Product/Edit/@item.ProductID" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+                <a href="~/Product/Delete/@item.ProductID" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a>
+            </td>*@
+        </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal delete product-->
+@foreach (var item in ViewBag.model)
+{
+    <div id="@item.ProductID" class="modal fade  @item.ProductID" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Xóa sản phẩm</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="~/Product/Delete/@item.ProductID">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="ProductID" id="ProductID" value="@item.ProductID">
+                            <label>Tên mặt hàng:</label>
+                            <input type="text" class="form-control" name="ProductName" id="ProductName" autofocus required value="@item.ProductName" />
+                        </div>
+
+                        @Html.Label("Supplier Name")
+                        @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.ListSupplier(), "-- Choice Supplier --", new { @class = "form-control" });e
+                        @Html.Label("Category Name")
+                        @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.ListCategory(), "-- Choice Category --", new { @class = "form-control" })
+
+
+                        <div class="form-group">
+                            <label>Đơn vị tính:</label>
+                            <input type="text" class="form-control" name="Unit" id="Unit" autofocus required value="@item.Unit" />
+                        </div>
+                        <div class="form-group">
+                            <label>Giá hàng:</label>
+                            <input type="text" class="form-control" name="Price" id="Price" autofocus required value="@item.Price" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ảnh minh họa:</label>
+                            <input type="text" class="form-control" name="Photo" id="Photo" autofocus required value="@item.Photo" />
+                        </div>
+
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('Xóa nhà vận chuyển')">
+                            <i class="glyphicon glyphicon-remove"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal edit product-->
+@foreach (var item in @ViewBag.model)
+{
+    <div id="@item.ProductID" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Chỉnh sửa product</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="~/Product/Save">
+
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="ProductID" id="ProductID" value="@item.ProductID">
+                            <label>Tên mặt hàng:</label>
+                            <input type="text" class="form-control" name="ProductName" id="ProductName" autofocus required value="@item.ProductName" />
+                        </div>
+
+                        @Html.Label("Supplier Name")
+                        @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.ListSupplier(), "-- Choice Supplier --", new { @class = "form-control" });e
+                        @Html.Label("Category Name")
+                        @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.ListCategory(), "-- Choice Category --", new { @class = "form-control" })
+
+
+                        <div class="form-group">
+                            <label>Đơn vị tính:</label>
+                            <input type="text" class="form-control" name="Unit" id="Unit" autofocus required value="@item.Unit" />
+                        </div>
+                        <div class="form-group">
+                            <label>Giá hàng:</label>
+                            <input type="text" class="form-control" name="Price" id="Price" autofocus required value="@item.Price" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ảnh minh họa:</label>
+                            <input type="text" class="form-control" name="Photo" id="Photo" autofocus required value="@item.Photo" />
+                        </div>
+
+
+
+                        @*    <div class="form-group">
+                                <input type="hidden" class="form-control" name="ShipperID" id="ShipperID" value="@item.ShipperID">
+                                <label>Tên Nhà nhà vận chuyển:</label>
+                                <input type="text" class="form-control" name="ShipperName" id="ShipperName" autofocus value="@item.ShipperName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Điện thoại:</label>
+                                <input type="text" class="form-control" name="Phone" id="Phone" value="@item.Phone" required>
+                            </div>*@
+                        <button class="btn btn-warning" type="submit">
+                            <i class="glyphicon glyphicon-edit"></i> Edit
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="text-center">
+    <ul class="pagination">
+        @for (int page = 1; page <= ViewBag.PageCount; page++)
+        {
+            if (page == ViewBag.Page)
+            {
+                <li class="active"><a href="javascript:;">@page</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="getProducts(@page)">@page</a></li>
+            }
+        }
+    </ul>
+</div>
+
+
+
+
+@section scripts {
+    <script>
+        function getProducts(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Products/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listProducts").empty();
+                    $("#listProducts").html(data);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            getProducts(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getProducts(1);
+            });
+        });
+    </script>
+}

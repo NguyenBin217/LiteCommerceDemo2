@@ -1,0 +1,182 @@
+﻿ @model IEnumerable<LiteCommerce.DomainModels.Product>
+
+@{
+    Layout = null;
+}
+
+<div class="text-left">
+    <p>
+        Có tất cả <strong>@ViewBag.RowCount</strong> mặt hàng.
+        Bạn đang ở trang <strong>@ViewBag.Page</strong>
+        trên tổng số <strong>@ViewBag.PageCount</strong> trang.
+    </p>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Tên hàng</th>
+            <th>Đơn vị tính</th>
+            <th>Giá hàng</th>
+            <th class="text-center">Ảnh minh họa</th>
+            <th class="text-right">
+                <a href="~/Products/Add" class="btn btn-xs btn-info">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Model)
+        {
+            <tr>
+                <td>
+                    <a href="~/Products/Details/@item.ProductID">@item.ProductName</a>
+                </td>
+                <td>@item.Unit</td>
+                <td>@item.Price</td>
+                <td>
+                    <img style="height:100px;" class="profile-user-img img-responsive img-circle" src="@item.Photo" />
+                </td>
+                <td>
+
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+
+                    <a href="~/Products/Edit/@item.ProductID" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+                    <a href="~/Products/Delete/@item.ProductID" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<!-- Modal edit product-->
+@foreach (var item in @ViewBag.model)
+{
+    <div id="@item.ProductID" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>Chỉnh sửa product</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="~/Product/Save">
+
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="ProductID" id="ProductID" value="@item.ProductID">
+                            <label>Tên mặt hàng:</label>
+                            <input type="text" class="form-control" name="ProductName" id="ProductName" autofocus required value="@item.ProductName" />
+                        </div>
+
+                        @Html.Label("Supplier Name")
+                        @Html.DropDownList("Supplier", SelectListHelper.ListSupplier(), "-- Choice Supplier --", new { @class = "form-control" });e
+                        @Html.Label("Category Name")
+                        @Html.DropDownList("Category", SelectListHelper.ListCategory(), "-- Choice Category --", new { @class = "form-control" })
+
+
+                        <div class="form-group">
+                            <label>Đơn vị tính:</label>
+                            <input type="text" class="form-control" name="Unit" id="Unit" autofocus required value="@item.Unit" />
+                        </div>
+                        <div class="form-group">
+                            <label>Giá hàng:</label>
+                            <input type="text" class="form-control" name="Price" id="Price" autofocus required value="@item.Price" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ảnh minh họa:</label>
+                            <input type="text" class="form-control" name="Photo" id="Photo" autofocus required value="@item.Photo" />
+                        </div>
+                        <button class="btn btn-warning" type="submit">
+                            <i class="glyphicon glyphicon-edit"></i> Edit
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="text-right">
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        {
+            if (i - 1 == 0)
+            {
+                int pageGiam = ViewBag.Page - 1;
+                if (pageGiam < 1)
+                {
+                    <li><a style="cursor:not-allowed">&lt;&lt;</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:;" onclick="getProducts(@pageGiam)">&lt;&lt;</a></li>
+                }
+
+            }
+            if (i == ViewBag.Page)
+            {
+                <li class="active"><a href="javascript:;">@i</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="getProducts(@i)">@i</a></li>
+            }
+            if (i + 1 > ViewBag.PageCount)
+            {
+                int pageTang = ViewBag.Page + 1;
+                if (pageTang >= ViewBag.PageCount + 1)
+                {
+                    <li><a style="cursor:not-allowed;">&gt;&gt;</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:;" onclick="getProducts(@pageTang)">&gt;&gt;</a></li>
+                }
+            }
+        }
+    </ul>
+</div>
+
+
+
+@section scripts {
+    <script>
+        function Edit(page) {
+            var edit = $("#formEdit").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Products/Edit",
+                type: "GET",
+                data: edit,
+                success: function (data) {
+                    $("#listProducts").empty();
+                    $("#listProducts").html(data);
+                }
+            });
+        }
+        $('a').click(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('~/Products/Edit'),
+                success: function (response) {
+                    alert(response);
+                }
+            });
+            return false; // for good measure
+        });
+
+        $(document).ready(function () {
+            Edit(1);
+            $("#formEdit").submit(function (e) {
+                e.preventDefault();
+                Edit(1);
+            });
+        });
+    </script>
+}

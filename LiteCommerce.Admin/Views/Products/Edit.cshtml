@@ -1,0 +1,133 @@
+﻿@model LiteCommerce.DomainModels.ProductEx
+@{
+    ViewBag.Title = "Cập nhật thông tin mặt hàng";
+}
+<!--Hiển thị thông tin mặt hàng để sữa đổi-->
+<form method="post" action="~/Products/Save">
+    <input type="hidden" name="ProductID" value="@Model.ProductID" />
+    <div class="form-group">
+        <label>Tên mặt hàng:</label>
+        <input type="text" class="form-control"
+               name="ProductName" id="ProductName" value="@Model.ProductName" autofocus >
+    </div>
+    <div class="form-group" name="Category">
+        @Html.Label("Loại hàng:")
+        @Html.DropDownList("CategoryID", SelectListHelper.ListCategory(), "-- Choice Category --", new { @class = "form-control" })
+    </div>
+    <div class="form-group" name="Supplier">
+        @Html.Label("Nhà cung cấp")
+        @Html.DropDownList("SupplierID", SelectListHelper.ListSupplier(), "-- Choice Supplier --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Đơn vị:</label>
+        <input type="text" class="form-control" name="Unit" id="Unit" value="@Model.Unit" >
+    </div>
+
+    <div class="form-group">
+        <label>Giá:</label>
+        <input type="text" class="form-control" name="Price" id="Price" value="@Model.Price" required>
+    </div>
+    <div class="form-group">
+        <label style="margin-left: 610px;">Photo:</label>
+        <img style="height:100px;" class="profile-user-img img-responsive img-circle" src="@Model.Photo" />
+        <input type="text" class="form-control" name="Photo" id="Photo" value="@Model.Photo" required />
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Lưu dữ liệu
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Products/Index" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-md-6">
+@*// hien thi danh sach cac thuoc tinh de xem, sua, xoa*@
+<form action="~/Products/DeleteAttributes/@Model.ProductID" method="post">
+    <table class="table table-bordered">
+        <thead style="
+    background-color: #94d0cc">
+            <tr>
+                <th>Tên thuộc tính</th>
+                <th>Giá trị</th>
+                <th>
+                    <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn btn-xs btn-danger">
+                        <i class="fa  fa-trash"></i>
+                    </button>
+                </th>
+                <th>
+                    <a href="~/Products/AddAttribute/@Model.ProductID" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Attributes)
+            {
+            <tr>
+
+                <td>@item.AttributeName</td>
+                <td>@item.AttributeValue</td>
+                <td>
+                    <input type="checkbox" name="attributesIds" value="@item.AttributeID" />
+                </td>
+                <td>
+                    <a href="~/Products/EditAttribute/@item.AttributeID" class="btn btn-xs btn-default">
+                        <i class="fa fa-edit"></i>
+                    </a>
+
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</form>
+</div>
+<div class="col-md-6">
+    @*// hien thi danh sach cac thuoc tinh  anhr de xem, sua, xoa*@
+    <form action="~/Products/DeleteGallery/@Model.ProductID" method="post">
+        <table class="table table-bordered">
+            <thead style="background-color: #77acf1">
+                <tr>
+                    <th>Photo:</th>
+                    <th>Mô tả:</th>
+                    <th>
+                        <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn btn-xs btn-danger">
+                            <i class="fa  fa-trash"></i>
+                        </button>
+                    </th>
+                    <th>
+                        <a href="~/Products/AddGallery/@Model.ProductID" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i></a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Galleries)
+                {
+                <tr>
+
+                    <td>@item.Photo</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <input type="checkbox" name="galleryIds" value="@item.GalleryID" />
+                    </td>
+                    <td>
+                        <a href="~/Products/EditGallery/@item.GalleryID" class="btn btn-xs btn-default">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+</div>
+
+

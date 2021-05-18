@@ -1,0 +1,76 @@
+﻿@model LiteCommerce.DomainModels.Customer
+@{
+    ViewBag.Title = "Xác nhận xóa khách hàng";
+}
+<form method="post" action="~/Customer/Delete/@Model.CustomerID">
+    <div class="form-group">
+        <label>Tên Khách hàng:</label>
+        <input type="text" class="form-control" name="CustomerName" id="CustomerName" autofocus
+               value="@Model.CustomerName" readonly>
+    </div>
+    <div class="form-group">
+        <label>Tên giao dịch:</label>
+        <input type="text" class="form-control" name="ContactName" id="ContactName"
+               value="@Model.ContactName" readonly>
+    </div>
+    <div class="form-group">
+        <label>Địa chỉ liên hệ:</label>
+        <input type="text" class="form-control" name="Address" id="Address"
+               value="@Model.Address" readonly>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Quốc gia:</label>
+                <input type="text" class="form-control" name="Country" id="Country"
+                       value="@Model.Country" readonly>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Thành phố:</label>
+                <input type="text" class="form-control" name="City" id="City"
+                       value="@Model.City" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Mã bưu chính:</label>
+        <input type="text" class="form-control" name="PostalCode" id="PostalCode"
+               value="@Model.PostalCode" readonly>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="text" class="form-control" name="Email" id="Email"
+                       value="@Model.Email" readonly>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="text" class="form-control" name="Password" id="Password"
+                       value="@Model.Password" readonly>
+            </div>
+        </div>
+    </div>
+    <div class=" text-danger text-center">
+        <p>Bạn thực sự muốn xóa khách hàng này khỏi hệ thống không ?</p>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <button class="btn btn-danger">
+                <i class="fa fa-check"></i> Xác nhận xóa
+            </button>
+        </div>
+        <div class="col-md-6 text-center">
+            <a href="~/Customer/Index" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</form>
+
+
+

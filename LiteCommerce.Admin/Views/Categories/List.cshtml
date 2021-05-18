@@ -1,0 +1,109 @@
+﻿@model LiteCommerce.DomainModels.Categorie
+
+@{
+    Layout = null;
+}
+
+<div class="text-left">
+    <p>
+        Có tất cả <strong>@ViewBag.RowCount</strong> loại hàng.
+        Bạn đang ở trang <strong>@ViewBag.Page</strong>
+        trên tổng số <strong>@ViewBag.PageCount</strong> trang.
+    </p>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>CategoryName</th>
+            <th>Description</th>
+            <th>ParentCategoryId</th>
+         @*   <th class="text-right">
+                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal_Add">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </th>*@
+
+            <th class="text-right">
+                <a href="~/Categories/Add" class="btn btn-xs btn-primary">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.model)
+        {
+            <tr>
+                <td>
+                    <a href="~/Categories/Details/@item.CategoryID">@item.CategoryName</a>
+                </td>
+                <td>@item.Description</td>
+                <td>@item.ParentCategoryId</td>
+              @*  
+                <td class="text-right">
+                    <button class="btn btn-xs btn-info"
+                            data-toggle="modal" data-target="#@item.CategoryID">
+                        <i class="fa fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-xs btn-danger"
+                            data-toggle="modal" data-target=".@item.CategoryID">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </td>*@
+                 <td>
+                      <a href="~/Categories/Edit/@item.CategoryID" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+                      <a href="~/Categories/Delete/@item.CategoryID" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a>
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="text-center">
+    <ul class="pagination">
+        @for (int page = 1; page <= ViewBag.PageCount; page++)
+        {
+            if (page == ViewBag.Page)
+            {
+                <li class="active"><a href="javascript:;">@page</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="getCategories(@page)">@page</a></li>
+            }
+        }
+    </ul>
+</div>
+
+
+
+@*
+@section scripts {
+    <script>
+        function getCategories(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Categories/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listCategories").empty();
+                    $("#listCategories").html(data);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            getProducts(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getCategories(1);
+            });
+        });
+    </script>
+}*@

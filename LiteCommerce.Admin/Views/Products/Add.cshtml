@@ -1,0 +1,49 @@
+﻿@model LiteCommerce.DomainModels.Product
+@{
+    ViewBag.Title = "Cập nhật thông tin mặt hàng";
+}
+<!--Hiển thị thông tin mặt hàng để sữa đổi-->
+<form method="post" action="~/Products/Save">
+    <input type="hidden" name="ProductID" value="@Model.ProductID" />
+    <div class="form-group">
+        <label>Tên mặt hàng:</label>
+        <input type="text" class="form-control"
+               name="ProductName" id="ProductName" value="@Model.ProductName" autofocus required >
+    </div>
+    <div class="form-group" name="Category">
+        @Html.Label("Loại hàng:")
+        @Html.DropDownList("CategoryID", SelectListHelper.ListCategory(),  new { @class = "form-control" })
+    </div>
+    <div class="form-group" name="Supplier">
+        @Html.Label("Nhà cung cấp:")
+        @Html.DropDownList("SupplierID", SelectListHelper.ListSupplier(), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Đơn vị:</label>
+        <input type="text" class="form-control" name="Unit" id="Unit" value="@Model.Unit" required>
+    </div>
+
+    <div class="form-group">
+        <label>Giá:</label>
+        <input type="text" class="form-control" name="Price" id="Price" value="@Model.Price" required>
+    </div>
+    <div class="form-group">
+        <label>Photo:</label>
+        <input type="text" class="form-control" name="Photo" id="Photo" value="@Model.Photo" required >
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Lưu dữ liệu
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Products/Index" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</form>
